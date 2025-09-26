@@ -88,6 +88,9 @@ const ProjectionsPage = () => {
                     <SavingsGapAnalysis analysis={analysis} />
                 </div>
 
+                {/* --- EFC (Expected Family Contribution) Section --- */}
+                <EFCSection analysis={analysis} userData={userData} />
+
                 {/* --- Strategies Section --- */}
                 <div className="space-y-8">
                     <ContributionOptimizer analysis={analysis} userData={userData} />
@@ -217,3 +220,60 @@ const ContributionOptimizer = ({ analysis, userData }) => {
 };
 
 export default ProjectionsPage;
+
+// --- EFC Section ---
+const EFCSection = ({ analysis, userData }) => {
+    const efc = analysis.financialAid;
+    if (!efc) return null;
+    const academic = (userData?.academicPerformance || '').toLowerCase();
+    const meritEligible = academic === 'excellent' || academic === 'good';
+    const grantEligible = meritEligible || efc.financialAidEligibility.pellGrantEligible;
+
+    return (
+        <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Expected Family Contribution (EFC)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="border rounded-lg p-4">
+                    <div className="text-sm text-gray-600">Calculated EFC</div>
+                    <div className="text-2xl font-bold text-gray-800">₹{efc.efc.toLocaleString('en-IN')}</div>
+                </div>
+                <div className="border rounded-lg p-4">
+                    <div className="text-sm text-gray-600">Estimated Financial Need</div>
+                    <div className="text-2xl font-bold text-gray-800">₹{efc.estimatedFinancialNeed.toLocaleString('en-IN')}</div>
+                </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="text-sm font-semibold text-gray-700 mb-2">Eligibility</div>
+                    <div className="text-sm text-gray-600 flex items-center justify-between">
+                        <span>Educational Grant Eligible</span>
+                        <span className={`font-semibold ${grantEligible ? 'text-green-600' : 'text-gray-700'}`}>
+                            {grantEligible ? 'Yes' : 'No'}
+                        </span>
+                    </div>
+                    <div className="text-sm text-gray-600 flex items-center justify-between mt-2">
+                        <span>Need-based Aid Eligible</span>
+                        <span className={`font-semibold ${efc.financialAidEligibility.needBasedAidEligible ? 'text-green-600' : 'text-gray-700'}`}>
+                            {efc.financialAidEligibility.needBasedAidEligible ? 'Yes' : 'No'}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="text-sm font-semibold text-gray-700 mb-2">Breakdown</div>
+                    <div className="text-sm text-gray-600 space-y-1">
+                        <div className="flex items-center justify-between">
+                            <span>Available Income</span>
+                            <span className="font-semibold">₹{efc.breakdown.availableIncome.toLocaleString('en-IN')}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span>Protected Assets</span>
+                            <span className="font-semibold">₹{efc.breakdown.protectedAssets.toLocaleString('en-IN')}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

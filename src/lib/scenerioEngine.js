@@ -246,17 +246,18 @@ export function simulateCoverdellESA(initialAmount, annualContribution, annualRe
  * @returns {number} Numeric income estimate
  */
 function parseIncomeRange(incomeRange) {
+  // Map to INR (annual) based on UI labels (e.g., 3.5–5 lakh etc.)
   const incomeMap = {
-    'under-30k': 25000,
-    '30k-50k': 40000,
-    '50k-75k': 62500,
-    '75k-100k': 87500,
-    '100k-150k': 125000,
-    '150k-200k': 175000,
-    '200k-250k': 225000,
-    'over-250k': 300000
+    'under-30k': 350000,    // Under 3.5 lakh
+    '30k-50k': 500000,      // 3.5 - 5 lakh (midpoint approx)
+    '50k-75k': 750000,      // 5 - 7.5 lakh
+    '75k-100k': 1000000,    // 7.5 - 10 lakh
+    '100k-150k': 1500000,   // 10 - 15 lakh
+    '150k-200k': 2000000,   // 15 - 20 lakh
+    '200k-250k': 2500000,   // 20 - 25 lakh
+    'over-250k': 3000000    // 30 lakh baseline for over 25 lakh
   };
-  return incomeMap[incomeRange] || 87500;
+  return incomeMap[incomeRange] || 1000000; // default 10 lakh
 }
 
 /**
@@ -280,10 +281,10 @@ export function calculateEFC(familyData) {
   // Income Assessment
   let adjustedGrossIncome = income;
   
-  // Standard deductions (simplified)
-  const standardDeductions = relationshipStatus === 'married' ? 25900 : 12950;
+  // Standard deductions (simplified, INR)
+  const standardDeductions = relationshipStatus === 'married' ? 250000 : 125000;
   const stateLocalTaxes = income * 0.05; // Approximate state/local tax
-  const employmentAllowance = Math.min(income * 0.35, 4000);
+  const employmentAllowance = Math.min(income * 0.35, 40000);
   
   const totalDeductions = standardDeductions + stateLocalTaxes + employmentAllowance;
   const availableIncome = Math.max(0, adjustedGrossIncome - totalDeductions);
@@ -297,10 +298,10 @@ export function calculateEFC(familyData) {
   }
   
   // Asset Assessment
-  // Asset protection allowance based on age and marital status
+  // Asset protection allowance based on age and marital status (INR)
   const assetProtectionAllowance = relationshipStatus === 'married' ? 
-    Math.max(0, 30000 + (parentAge - 45) * 600) : 
-    Math.max(0, 15000 + (parentAge - 45) * 400);
+    Math.max(0, 300000 + (parentAge - 45) * 6000) : 
+    Math.max(0, 150000 + (parentAge - 45) * 4000);
   
   const protectedAssets = Math.min(assets, assetProtectionAllowance);
   const assessableAssets = Math.max(0, assets - protectedAssets);
@@ -314,7 +315,7 @@ export function calculateEFC(familyData) {
   const efc = Math.max(0, Math.round(preliminaryEFC));
   
   // Calculate financial aid eligibility (simplified)
-  const averageCollegeCost = 30000; // Average annual college cost
+  const averageCollegeCost = 300000; // Average annual college cost (INR)
   const estimatedFinancialNeed = Math.max(0, averageCollegeCost - efc);
   
   return {

@@ -249,8 +249,8 @@ const RecommendationDashboard = ({ userData }) => {
 
   const savingsComparisonData = [
     { vehicle: '529 Plan', finalAmount: analysis.savingsProjections.plan529.finalBalance },
-    { vehicle: 'Traditional Savings', finalAmount: analysis.savingsProjections.traditionalSavings.finalBalance },
-    { vehicle: 'Coverdell ESA', finalAmount: analysis.savingsProjections.coverdellESA.finalBalance }
+    { vehicle: 'Savings', finalAmount: analysis.savingsProjections.traditionalSavings.finalBalance },
+    { vehicle: 'Investments', finalAmount: analysis.savingsProjections.coverdellESA.finalBalance }
   ];
 
   return (
