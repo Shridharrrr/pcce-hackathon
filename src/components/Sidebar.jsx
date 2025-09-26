@@ -9,11 +9,15 @@ import {
   Bars3Icon,
   XMarkIcon,
   ArrowRightOnRectangleIcon,
+  ChatBubbleLeftRightIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeSolid,
   ChartBarIcon as ChartBarSolid,
   LightBulbIcon as LightBulbSolid,
+  ChatBubbleLeftRightIcon as ChatBubbleLeftRightSolid,
+  BuildingLibraryIcon as BuildingLibrarySolid,
 } from "@heroicons/react/24/solid";
 
 // Updated navigation for your app
@@ -28,14 +32,14 @@ const navigation = [
   {
     name: "Retirement",
     href: "/retirement",
-    icon: ChartBarIcon,
-    activeIcon: ChartBarSolid,
+    icon: BuildingLibraryIcon,
+    activeIcon: BuildingLibrarySolid,
   },
   {
-    name: "Finance Aid Bot",
-    href: "/chatbot",
-    icon: ChartBarIcon,
-    activeIcon: ChartBarSolid,
+    name: "Financial Aid Chat",
+    href: "/chat",
+    icon: ChatBubbleLeftRightIcon,
+    activeIcon: ChatBubbleLeftRightSolid,
   }
 ];
 
