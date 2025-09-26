@@ -37,7 +37,7 @@ const navigation = [
   },
   {
     name: "Financial Aid Chat",
-    href: "/chat",
+    href: "/chatbot",
     icon: ChatBubbleLeftRightIcon,
     activeIcon: ChatBubbleLeftRightSolid,
   }

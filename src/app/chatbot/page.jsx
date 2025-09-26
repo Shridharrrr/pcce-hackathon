@@ -16,40 +16,21 @@ export default function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  useEffect(() => scrollToBottom(), [messages]);
 
   // Load chat history from Firebase
   useEffect(() => {
-    const loadChatHistory = async () => {
-      try {
-        const q = query(collection(db, 'financialAidChat'), orderBy('timestamp', 'asc'));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const messagesData = [];
-          querySnapshot.forEach((doc) => {
-            messagesData.push({ id: doc.id, ...doc.data() });
-          });
-          setMessages(messagesData);
-        });
-
-        return unsubscribe;
-      } catch (error) {
-        console.error('Error loading chat history:', error);
-        setError('Failed to load chat history');
-      }
-    };
-
-    const unsubscribe = loadChatHistory();
-    return () => {
-      if (unsubscribe) {
-        unsubscribe.then(unsub => unsub && unsub());
-      }
-    };
+    const q = query(collection(db, 'financialAidChat'), orderBy('timestamp', 'asc'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const messagesData = [];
+      querySnapshot.forEach((doc) => messagesData.push({ id: doc.id, ...doc.data() }));
+      setMessages(messagesData);
+    });
+    return unsubscribe;
   }, []);
 
   const sendMessage = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     if (!input.trim() || loading) return;
 
     const userMessage = input.trim();
@@ -57,41 +38,23 @@ export default function Chatbot() {
     setLoading(true);
     setError('');
 
-    // Add user message to Firebase
     try {
-      const userMessageData = {
-        content: userMessage,
-        role: 'user',
-        timestamp: serverTimestamp(),
-      };
-
+      const userMessageData = { content: userMessage, role: 'user', timestamp: serverTimestamp() };
       await addDoc(collection(db, 'financialAidChat'), userMessageData);
 
-      // Get conversation history for context (last 6 messages)
       const recentMessages = messages.slice(-6);
-      
-      // Generate AI response using direct API call
       const aiResponse = await generateFinancialAidResponse(userMessage, recentMessages);
 
-      // Add AI response to Firebase
-      const aiMessageData = {
-        content: aiResponse,
-        role: 'assistant',
-        timestamp: serverTimestamp(),
-      };
-
+      const aiMessageData = { content: aiResponse, role: 'assistant', timestamp: serverTimestamp() };
       await addDoc(collection(db, 'financialAidChat'), aiMessageData);
-    } catch (error) {
-      console.error('Error in sendMessage:', error);
+    } catch (err) {
+      console.error(err);
       setError('Failed to send message. Please try again.');
-      
-      // Add error message to chat
       const errorMessageData = {
-        content: "I'm sorry, I encountered an error processing your request. Please try again.",
+        content: "I'm sorry, I encountered an error processing your request.",
         role: 'assistant',
         timestamp: serverTimestamp(),
       };
-      
       await addDoc(collection(db, 'financialAidChat'), errorMessageData);
     } finally {
       setLoading(false);
@@ -109,11 +72,10 @@ export default function Chatbot() {
 
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return '';
-    
     try {
       const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    } catch (error) {
+    } catch {
       return '';
     }
   };
@@ -135,14 +97,13 @@ export default function Chatbot() {
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-        {messages.length === 0 ? (
+        {messages.length === 0 && (
           <div className="text-center text-gray-600 mt-8">
             <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
               <span className="text-2xl">🎓</span>
             </div>
             <p className="text-lg font-medium mb-2">Welcome to Financial Aid Help!</p>
             <p className="text-sm mb-6">I'm here to assist with all your financial aid questions.</p>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
               {suggestedQuestions.map((question, index) => (
                 <button
@@ -155,45 +116,40 @@ export default function Chatbot() {
               ))}
             </div>
           </div>
-        ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[80%] rounded-2xl p-4 shadow-sm ${
-                  message.role === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-white border border-gray-200 rounded-bl-none'
-                }`}
-              >
-                <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</p>
-                <span className={`text-xs block mt-2 ${
-                  message.role === 'user' ? 'text-blue-200' : 'text-gray-500'
-                }`}>
-                  {formatTimestamp(message.timestamp)}
-                </span>
-              </div>
-            </div>
-          ))
         )}
-        
+
+        {messages.map((message) => (
+          <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              className={`max-w-[80%] rounded-2xl p-4 shadow-sm ${
+                message.role === 'user'
+                  ? 'bg-blue-600 text-white rounded-br-none'
+                  : 'bg-white border border-gray-200 rounded-bl-none'
+              }`}
+            >
+              <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</p>
+              <span className={`text-xs block mt-2 ${message.role === 'user' ? 'text-blue-200' : 'text-gray-500'}`}>
+                {formatTimestamp(message.timestamp)}
+              </span>
+            </div>
+          </div>
+        ))}
+
         {loading && (
           <div className="flex justify-start">
             <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-none p-4 shadow-sm">
               <div className="flex items-center space-x-2">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full" style={{ animationDelay: '0.2s' }}></div>
                 </div>
                 <span className="text-sm text-gray-500">Researching financial aid information...</span>
               </div>
             </div>
           </div>
         )}
-        
+
         {error && (
           <div className="flex justify-center">
             <div className="bg-red-50 border border-red-200 rounded-lg p-3 max-w-md">
@@ -201,7 +157,7 @@ export default function Chatbot() {
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -224,7 +180,7 @@ export default function Chatbot() {
             {loading ? 'Sending...' : 'Send'}
           </button>
         </div>
-        
+
         <div className="mt-2 flex flex-wrap gap-1">
           <span className="text-xs text-gray-500">Try asking about: </span>
           {suggestedQuestions.slice(0, 2).map((question, index) => (
