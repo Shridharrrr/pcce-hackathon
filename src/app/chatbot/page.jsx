@@ -62,12 +62,12 @@ export default function Chatbot() {
   };
 
   const suggestedQuestions = [
-    "How do I apply for FAFSA?",
-    "What's the difference between grants and loans?",
-    "When is the FAFSA deadline for next year?",
-    "How can I find scholarships I qualify for?",
-    "What documents do I need for financial aid?",
-    "How does the financial aid appeal process work?",
+    "My take-home is ₹55,000; rent ₹15,000, groceries ₹8,000. Build a budget.",
+    "How much monthly should I invest to reach ₹12 lakh in 5 years?",
+    "I scored 85% in 12th (GPA ~8.5). Which scholarships fit me?",
+    "How can I reduce interest on my ₹6 lakh education loan?",
+    "I spend ₹3,000 eating out. Suggest 3 ways to cut costs.",
+    "What is a safe withdrawal rate for retirement planning in India?",
   ];
 
   const formatTimestamp = (timestamp) => {
@@ -81,9 +81,9 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="flex flex-col h-[600px] max-w-4xl mx-auto bg-white shadow-xl rounded-lg border border-gray-200">
+    <div className="flex flex-col max-w-7xl mx-auto bg-white shadow-xl rounded-lg border border-gray-200">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
+      <div className="bg-blue-600 text-white p-4 rounded-t-lg">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
             <span className="text-lg">💬</span>
@@ -96,7 +96,7 @@ export default function Chatbot() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" style={{ maxHeight: "60vh" }}>
         {messages.length === 0 && (
           <div className="text-center text-gray-600 mt-8">
             <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
@@ -104,7 +104,7 @@ export default function Chatbot() {
             </div>
             <p className="text-lg font-medium mb-2">Welcome to Financial Aid Help!</p>
             <p className="text-sm mb-6">I'm here to assist with all your financial aid questions.</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl mx-auto">
               {suggestedQuestions.map((question, index) => (
                 <button
                   key={index}
@@ -121,7 +121,7 @@ export default function Chatbot() {
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
-              className={`max-w-[80%] rounded-2xl p-4 shadow-sm ${
+              className={`max-w-[85%] rounded-2xl p-4 shadow-sm break-words ${
                 message.role === 'user'
                   ? 'bg-blue-600 text-white rounded-br-none'
                   : 'bg-white border border-gray-200 rounded-bl-none'
@@ -168,8 +168,8 @@ export default function Chatbot() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about FAFSA, scholarships, loans, deadlines..."
-            className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            placeholder="Ask about budgets, scholarships, loans, or savings goals..."
+            className="flex-1 form-input"
             disabled={loading}
           />
           <button
@@ -182,13 +182,13 @@ export default function Chatbot() {
         </div>
 
         <div className="mt-2 flex flex-wrap gap-1">
-          <span className="text-xs text-gray-500">Try asking about: </span>
+          <span className="text-xs text-gray-800">Try asking about: </span>
           {suggestedQuestions.slice(0, 2).map((question, index) => (
             <button
               key={index}
               type="button"
               onClick={() => setInput(question)}
-              className="text-xs text-blue-600 hover:text-blue-800 underline transition-colors"
+              className="text-xs text-blue-700 hover:text-blue-900 underline transition-colors"
             >
               {question.split('?')[0]}?
             </button>
