@@ -46,22 +46,15 @@ const ProjectionsPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-                <div className="relative">
-                    <div className="animate-spin h-16 w-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg">
-                            <span className="text-2xl font-extrabold text-amber-600">₹</span>
-                        </div>
-                    </div>
-                </div>
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
             </div>
         );
     }
 
     if (!userData || !recommendations) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+            <div className="min-h-screen bg-white flex items-center justify-center">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-700">Could not load projections data.</h2>
                     <a href="/dashboard" className="text-blue-600 hover:underline mt-4 inline-block">Return to Dashboard</a>
@@ -73,7 +66,7 @@ const ProjectionsPage = () => {
     const { analysis } = recommendations;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-white">
             <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-gray-800">Projections & Strategies</h1>
@@ -105,7 +98,7 @@ const ProjectionsPage = () => {
 
 const CollegeCostProjection = ({ analysis }) => (
     <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold mb-4">4-Year College Cost Projection</h3>
+        <h3 className="text-xl font-semibold mb-4 text-black">4-Year College Cost Projection</h3>
         <ResponsiveContainer width="100%" height={300}>
             <BarChart data={analysis.tuitionProjections.yearByCost}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -116,17 +109,17 @@ const CollegeCostProjection = ({ analysis }) => (
             </BarChart>
         </ResponsiveContainer>
         <div className="mt-4 text-center">
-            <div className="text-2xl font-bold text-gray-800">
+            <div className="text-2xl font-bold text-black">
                 ₹{analysis.tuitionProjections.totalCollegeCost.toLocaleString('en-IN')}
             </div>
-            <div className="text-sm text-gray-600">Total 4-Year Cost</div>
+            <div className="text-sm text-black">Total 4-Year Cost</div>
         </div>
     </div>
 );
 
 const SavingsGapAnalysis = ({ analysis }) => (
     <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-semibold mb-4">Savings Gap Analysis</h3>
+        <h3 className="text-xl font-semibold mb-4 text-black">Savings Gap Analysis</h3>
         <ResponsiveContainer width="100%" height={300}>
             <PieChart>
                 <Pie
@@ -145,11 +138,11 @@ const SavingsGapAnalysis = ({ analysis }) => (
         </ResponsiveContainer>
         <div className="mt-4 space-y-2">
             <div className="flex justify-between">
-                <span className="text-gray-600">Coverage Percentage:</span>
-                <span className="font-semibold">{Math.round(analysis.gapAnalysis.coverage529)}%</span>
+                <span className="text-black">Coverage Percentage:</span>
+                <span className="font-semibold text-black">{Math.round(analysis.gapAnalysis.coverage529)}%</span>
             </div>
             <div className="flex justify-between">
-                <span className="text-gray-600">Remaining Gap:</span>
+                <span className="text-black">Remaining Gap:</span>
                 <span className="font-semibold text-red-600">
                     ₹{analysis.gapAnalysis.shortfall529.toLocaleString('en-IN')}
                 </span>
@@ -168,7 +161,7 @@ const RiskAssessmentChart = ({ analysis }) => {
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">Risk Scenario Analysis</h3>
+            <h3 className="text-xl font-semibold mb-4 text-black">Risk Scenario Analysis</h3>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={riskScenarios}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -196,21 +189,21 @@ const ContributionOptimizer = ({ analysis, userData }) => {
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">Contribution Optimization</h3>
+            <h3 className="text-xl font-semibold mb-4 text-black">Contribution Optimization</h3>
             <div className="space-y-4">
                 {scenarios.map((scenario, index) => (
-                    <div key={index} className={`border rounded-lg p-4 ${index === 1 ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+                    <div key={index} className={`border rounded-lg p-4 ${index === 1 ? 'border-green-400 bg-green-50' : 'border-orange-400 bg-orange-50'}`}>
                         <div className="flex justify-between items-start mb-2">
                             <div>
-                                <div className="font-semibold text-gray-800">{scenario.name}</div>
-                                {index === 1 && <div className="text-xs text-blue-600 font-medium">RECOMMENDED</div>}
+                                <div className="font-semibold text-black">{scenario.name}</div>
+                                {index === 1 && <div className="text-xs text-green-700 font-medium">RECOMMENDED</div>}
                             </div>
                             <div className="text-right">
                                 <div className="text-lg font-bold">₹{scenario.monthly.toLocaleString('en-IN')}/mo</div>
                             </div>
                         </div>
                         <div className="bg-gray-200 rounded-full h-2 mt-3">
-                            <div className={`h-2 rounded-full ${scenario.coverage >= 100 ? 'bg-green-500' : 'bg-blue-500'}`} style={{ width: `${Math.min(100, scenario.coverage)}%` }}></div>
+                            <div className={`h-2 rounded-full ${index === 1 ? 'bg-green-600' : 'bg-orange-500'}`} style={{ width: `${Math.min(100, scenario.coverage)}%` }}></div>
                         </div>
                     </div>
                 ))}
@@ -229,47 +222,57 @@ const EFCSection = ({ analysis, userData }) => {
     const meritEligible = academic === 'excellent' || academic === 'good';
     const grantEligible = meritEligible || efc.financialAidEligibility.pellGrantEligible;
 
+    // Fallback for estimated financial need if 0
+    const tuitionTotal = analysis.tuitionProjections?.totalCollegeCost || 0;
+    const savingsAtGrad = analysis.savingsProjections?.plan529?.finalBalance || 0;
+    const fallbackNeed = Math.max(0, tuitionTotal - savingsAtGrad);
+    const estimatedNeed = efc.estimatedFinancialNeed && efc.estimatedFinancialNeed > 0 ? efc.estimatedFinancialNeed : fallbackNeed;
+
     return (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">Expected Family Contribution (EFC)</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="border rounded-lg p-4">
-                    <div className="text-sm text-gray-600">Calculated EFC</div>
-                    <div className="text-2xl font-bold text-gray-800">₹{efc.efc.toLocaleString('en-IN')}</div>
-                </div>
-                <div className="border rounded-lg p-4">
-                    <div className="text-sm text-gray-600">Estimated Financial Need</div>
-                    <div className="text-2xl font-bold text-gray-800">₹{efc.estimatedFinancialNeed.toLocaleString('en-IN')}</div>
-                </div>
+        <div className="bg-white rounded-xl shadow-lg p-0 overflow-hidden">
+            <div className="bg-blue-600 text-white px-6 py-4">
+                <h3 className="text-xl font-semibold">Expected Family Contribution (EFC)</h3>
             </div>
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm font-semibold text-gray-700 mb-2">Eligibility</div>
-                    <div className="text-sm text-gray-600 flex items-center justify-between">
-                        <span>Educational Grant Eligible</span>
-                        <span className={`font-semibold ${grantEligible ? 'text-green-600' : 'text-gray-700'}`}>
-                            {grantEligible ? 'Yes' : 'No'}
-                        </span>
+            <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="border rounded-lg p-4">
+                        <div className="text-sm text-gray-700">Calculated EFC</div>
+                        <div className="text-2xl font-bold text-gray-900">₹{efc.efc.toLocaleString('en-IN')}</div>
                     </div>
-                    <div className="text-sm text-gray-600 flex items-center justify-between mt-2">
-                        <span>Need-based Aid Eligible</span>
-                        <span className={`font-semibold ${efc.financialAidEligibility.needBasedAidEligible ? 'text-green-600' : 'text-gray-700'}`}>
-                            {efc.financialAidEligibility.needBasedAidEligible ? 'Yes' : 'No'}
-                        </span>
+                    <div className="border rounded-lg p-4">
+                        <div className="text-sm text-gray-700">Estimated Financial Need</div>
+                        <div className="text-2xl font-bold text-gray-900">₹{estimatedNeed.toLocaleString('en-IN')}</div>
                     </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm font-semibold text-gray-700 mb-2">Breakdown</div>
-                    <div className="text-sm text-gray-600 space-y-1">
-                        <div className="flex items-center justify-between">
-                            <span>Available Income</span>
-                            <span className="font-semibold">₹{efc.breakdown.availableIncome.toLocaleString('en-IN')}</span>
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                        <div className="text-sm font-semibold text-gray-800 mb-2">Eligibility</div>
+                        <div className="text-sm text-gray-700 flex items-center justify-between">
+                            <span>Educational Grant Eligible</span>
+                            <span className={`font-semibold ${grantEligible ? 'text-green-600' : 'text-gray-900'}`}>
+                                {grantEligible ? 'Yes' : 'No'}
+                            </span>
                         </div>
-                        <div className="flex items-center justify-between">
-                            <span>Protected Assets</span>
-                            <span className="font-semibold">₹{efc.breakdown.protectedAssets.toLocaleString('en-IN')}</span>
+                        <div className="text-sm text-gray-700 flex items-center justify-between mt-2">
+                            <span>Need-based Aid Eligible</span>
+                            <span className={`font-semibold ${efc.financialAidEligibility.needBasedAidEligible ? 'text-green-600' : 'text-gray-900'}`}>
+                                {efc.financialAidEligibility.needBasedAidEligible ? 'Yes' : 'No'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                        <div className="text-sm font-semibold text-gray-800 mb-2">Breakdown</div>
+                        <div className="text-sm text-gray-700 space-y-1">
+                            <div className="flex items-center justify-between">
+                                <span>Available Income</span>
+                                <span className="font-semibold">₹{efc.breakdown.availableIncome.toLocaleString('en-IN')}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span>Protected Assets</span>
+                                <span className="font-semibold">₹{efc.breakdown.protectedAssets.toLocaleString('en-IN')}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

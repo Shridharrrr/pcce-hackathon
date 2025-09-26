@@ -25,12 +25,6 @@ const navigation = [
     icon: ChartBarIcon,
     activeIcon: ChartBarSolid,
   },
-  {
-    name: "Chatbot",
-    href: "/chatbot",
-    icon: ChartBarIcon,
-    activeIcon: ChartBarSolid,
-  }
 ];
 
 export default function AppSidebar({ children }) {

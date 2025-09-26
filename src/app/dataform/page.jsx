@@ -472,9 +472,9 @@ const DataEntryForm = ({ onDataSubmit }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+    <div className="min-h-screen bg-white py-8">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           {renderStepIndicator()}
           
           <div className="mb-8">
@@ -493,7 +493,7 @@ const DataEntryForm = ({ onDataSubmit }) => {
             {currentStep < 4 ? (
               <button
                 onClick={nextStep}
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
               >
                 Next Step
               </button>
@@ -501,7 +501,7 @@ const DataEntryForm = ({ onDataSubmit }) => {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {loading ? 'Saving...' : 'Complete Setup'}
               </button>
