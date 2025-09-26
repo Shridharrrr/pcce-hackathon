@@ -25,6 +25,18 @@ const navigation = [
     icon: ChartBarIcon,
     activeIcon: ChartBarSolid,
   },
+  {
+    name: "Retirement",
+    href: "/retirement",
+    icon: ChartBarIcon,
+    activeIcon: ChartBarSolid,
+  },
+  {
+    name: "Finance Aid Bot",
+    href: "/chatbot",
+    icon: ChartBarIcon,
+    activeIcon: ChartBarSolid,
+  }
 ];
 
 export default function AppSidebar({ children }) {
