@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/config/firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '@/config/firebase';
 
 const AuthForm = ({ onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -20,6 +20,21 @@ const AuthForm = ({ onAuthSuccess }) => {
       [e.target.name]: e.target.value
     });
     setError('');
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      await signInWithPopup(auth, googleProvider);
+      if (typeof window !== 'undefined') {
+        window.location.href = '/dataform';
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -137,6 +152,25 @@ const AuthForm = ({ onAuthSuccess }) => {
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
           </button>
         </form>
+
+        <div className="my-6 flex items-center">
+          <div className="flex-1 h-px bg-gray-200" />
+          <span className="mx-3 text-xs uppercase tracking-wider text-gray-400">or</span>
+          <div className="flex-1 h-px bg-gray-200" />
+        </div>
+
+        <button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          className="w-full flex items-center justify-center space-x-3 border border-gray-300 rounded-lg py-3 px-4 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            className="h-5 w-5"
+          />
+          <span className="text-gray-700 font-medium">Continue with Google</span>
+        </button>
       </div>
     </div>
   );
