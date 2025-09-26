@@ -21,6 +21,9 @@ Important guidelines:
 - Keep responses clear and concise but informative
 - For deadlines, mention that they vary by state and institution
 - Emphasize that FAFSA is free and should never require payment
+- Format your responses using bullet points for better readability
+- Use simple, clear language without markdown formatting
+- Structure information in logical points
 `;
 
 export async function generateFinancialAidResponse(userMessage, conversationHistory = []) {
@@ -39,6 +42,7 @@ export async function generateFinancialAidResponse(userMessage, conversationHist
     Current user question: ${userMessage}
     
     Please provide a helpful, accurate response as a financial aid advisor. Be specific and practical in your advice.
+    Format your response using clear bullet points without any markdown symbols.
     `;
 
     const response = await fetch(
@@ -47,7 +51,7 @@ export async function generateFinancialAidResponse(userMessage, conversationHist
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': "AIzaSyDT8DJfLAvDOOC1RlpS2trUDDLnmn1TUts", // <-- use header for Gemini 2.0
+          'x-goog-api-key': "AIzaSyDT8DJfLAvDOOC1RlpS2trUDDLnmn1TUts",
         },
         body: JSON.stringify({
           contents: [
@@ -79,10 +83,43 @@ export async function generateFinancialAidResponse(userMessage, conversationHist
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('Invalid response format from Gemini API');
     }
+  
+    const apiResponse = data.candidates[0].content.parts[0].text;
     
-    return data.candidates[0].content.parts[0].text;
+    // Convert markdown to plain text bullet points
+    return convertMarkdownToBulletPoints(apiResponse);
   } catch (error) {
     console.error('Error calling Gemini API:', error);
     return "I apologize, but I'm having trouble accessing the financial aid information right now. This could be due to a temporary issue. Please try again in a few moments, or contact your school's financial aid office directly for immediate assistance.";
   }
+}
+
+// Function to convert markdown formatting to plain text bullet points
+function convertMarkdownToBulletPoints(text) {
+  if (!text) return text;
+  
+  // Replace markdown bullets with plain text bullets
+  let convertedText = text
+    .replace(/^\s*[-*]\s+/gm, '• ') // Replace - or * at line start with •
+    .replace(/^\s*\d+\.\s+/gm, (match) => match) // Keep numbered lists as-is
+    .replace(/#{1,6}\s/g, '') // Remove markdown headers
+    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+    .replace(/\*(.*?)\*/g, '$1') // Remove italics
+    .replace(/`(.*?)`/g, '$1') // Remove inline code
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links but keep text
+    .replace(/\n{3,}/g, '\n\n') // Reduce multiple newlines
+    .trim();
+  
+  // Ensure proper line breaks for bullet points
+  convertedText = convertedText.split('\n').map(line => {
+    line = line.trim();
+    if (line.startsWith('•') || line.match(/^\d+\./)) {
+      return line;
+    } else if (line) {
+      return `• ${line}`;
+    }
+    return line;
+  }).join('\n');
+  
+  return convertedText;
 }

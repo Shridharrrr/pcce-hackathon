@@ -128,7 +128,7 @@ export default function RetirementPage() {
       },
       {
         title: "Corpus at retirement",
-        value: formatCurrencyIndian(accumulationData.at(-1)?.corpus || 0),
+        value: formatCurrencyIndian(accumulationData.at(-1)?.corpus /10|| 0),
         hint: "Projected savings at your retirement age",
       },
       {
@@ -138,7 +138,7 @@ export default function RetirementPage() {
       },
       {
         title: "Suggested corpus (rule-of-thumb)",
-        value: Number.isFinite(suggestedCorpus) ? formatCurrencyIndian(Math.round(suggestedCorpus)) : "N/A",
+        value: Number.isFinite(suggestedCorpus)/10 ? formatCurrencyIndian(Math.round(suggestedCorpus)/10) : "N/A",
         hint: "Using real return ≈ post-return − inflation",
       },
       {
@@ -148,7 +148,7 @@ export default function RetirementPage() {
       },
       {
         title: "Gap to suggested corpus",
-        value: gap > 0 ? formatCurrencyIndian(gap) : "On track",
+        value: gap > 0 ? formatCurrencyIndian(gap/10) : "On track",
         hint: "How much more you may need to accumulate",
       },
     ];
@@ -161,8 +161,17 @@ export default function RetirementPage() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-gray-900 mb-4">Retirement Security</h1>
+    <div className="p-12">
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Retirement Security</h1>
+        <a href="/dashboard" className="group flex items-center gap-2 border-2 border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-600 font-semibold py-2.5 px-5 rounded-lg transition-all duration-200 hover:shadow-md">
+    <svg className="w-4 h-4 transform group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+    Back to Dashboard
+</a>
+      </div>
+      
       <p className="text-sm text-gray-600 mb-6">Plan your retirement with inflation-aware projections, drawdown modeling, and clear insights.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -189,7 +198,7 @@ export default function RetirementPage() {
               <label className="text-sm text-gray-700">Monthly Contribution (₹)</label>
               <input className="form-input" type="number" name="monthlyContribution" value={inputs.monthlyContribution} onChange={handleChange} />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            
               <div>
                 <label className="text-sm text-gray-700">Return pre-retirement (%)</label>
                 <input className="form-input" type="number" name="expectedReturnPre" value={inputs.expectedReturnPre} onChange={handleChange} />
@@ -198,8 +207,8 @@ export default function RetirementPage() {
                 <label className="text-sm text-gray-700">Return post-retirement (%)</label>
                 <input className="form-input" type="number" name="expectedReturnPost" value={inputs.expectedReturnPost} onChange={handleChange} />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
+          
+            
               <div>
                 <label className="text-sm text-gray-700">Inflation rate (%)</label>
                 <input className="form-input" type="number" name="inflationRate" value={inputs.inflationRate} onChange={handleChange} />
@@ -209,7 +218,7 @@ export default function RetirementPage() {
                 <input className="form-input" type="number" name="currentMonthlyExpense" value={inputs.currentMonthlyExpense} onChange={handleChange} />
               </div>
             </div>
-          </div>
+      
         </section>
 
         <section className="bg-white border border-gray-200 rounded-xl p-4 lg:col-span-2">
@@ -219,8 +228,8 @@ export default function RetirementPage() {
               <LineChart data={[...accumulationData, ...drawdownData]} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" tick={{ fontSize: 10 }} />
-                <YAxis tickFormatter={(v) => formatCurrencyIndian(v)} tick={{ fontSize: 10 }} width={80} />
-                <Tooltip formatter={(v) => formatCurrencyIndian(v)} />
+                <YAxis tickFormatter={(v) => formatCurrencyIndian(v/10)} tick={{ fontSize: 10 }} width={80} />
+                <Tooltip formatter={(v) => formatCurrencyIndian(v/10)} />
                 <Legend wrapperStyle={{ fontSize: 10 }} />
                 <Line type="monotone" dataKey="corpus" name="Corpus" stroke="#2563eb" strokeWidth={2} dot={false} />
               </LineChart>
@@ -232,8 +241,8 @@ export default function RetirementPage() {
               <LineChart data={[...accumulationData, ...drawdownData]} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" tick={{ fontSize: 10 }} />
-                <YAxis tickFormatter={(v) => formatCurrencyIndian(v)} tick={{ fontSize: 10 }} width={80} />
-                <Tooltip formatter={(v) => formatCurrencyIndian(v)} />
+                <YAxis tickFormatter={(v) => formatCurrencyIndian(v/10)} tick={{ fontSize: 10 }} width={80} />
+                <Tooltip formatter={(v) => formatCurrencyIndian(v/10)} />
                 <Legend wrapperStyle={{ fontSize: 10 }} />
                 <Line type="monotone" dataKey="corpus" name="Corpus" stroke="#2563eb" strokeWidth={2} dot={false} />
                 {(() => {

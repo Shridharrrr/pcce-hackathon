@@ -105,7 +105,7 @@ export default function AppSidebar({ children }) {
         <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300">
           <div className="flex items-center justify-between h-16 px-4 border-b">
             <a href="/" className="text-xl font-bold text-gray-900">
-              EduPlanner
+              Planora
             </a>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -155,8 +155,8 @@ export default function AppSidebar({ children }) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex min-h-0 flex-1 flex-col bg-white border-r border-gray-200">
           <div className="flex h-16 items-center px-4 border-b">
-            <a href="/" className="text-xl font-bold text-gray-900">
-              EduPlanner
+            <a href="/" className="text-xl font-bold text-gray-900 ml-2">
+              Planora
             </a>
           </div>
 
@@ -211,7 +211,7 @@ export default function AppSidebar({ children }) {
           <div className="flex flex-1 justify-between px-4 lg:px-6">
             <div className="flex flex-1 items-center">
               <a href="/" className="lg:hidden text-xl font-bold text-gray-900">
-                EduPlanner
+                Planora
               </a>
             </div>
           </div>

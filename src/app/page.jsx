@@ -9,8 +9,8 @@ export default function Home() {
       <nav className="w-full bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded bg-blue-600" />
-            <span className="text-xl font-bold text-gray-900">EduPlanner</span>
+            <div className="h-6 w-6 rounded bg-blue-600" />
+            <span className="text-xl font-bold text-gray-900">Planora</span>
           </div>
           <div className="space-x-4">
             <a href="#features" className="text-gray-700 hover:text-gray-900">Features</a>

@@ -42,15 +42,8 @@ const DashboardPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-                <div className="relative">
-                    <div className="animate-spin h-16 w-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg">
-                            <span className="text-2xl font-extrabold text-amber-600">₹</span>
-                        </div>
-                    </div>
-                </div>
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
             </div>
         );
     }
@@ -66,7 +59,7 @@ const DashboardPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
                 {/* --- User Profile Section --- */}
                 <UserProfileHeader userData={userData} />
@@ -89,7 +82,7 @@ const DashboardPage = () => {
 // --- SUB-COMPONENTS ---
 
 const UserProfileHeader = ({ userData }) => (
-    <div className="bg-white rounded-2xl shadow-xl p-6">
+    <div className="bg-white rounded-2xl shadow-lg p-6">
         <div className="flex justify-between items-center">
             <div>
                 <h1 className="text-3xl font-bold text-gray-800">
@@ -224,10 +217,10 @@ const RecommendationDashboard = ({ userData }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      </div>
-    );
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
+            </div>
+        );
   }
 
   if (!recommendations) {
@@ -299,7 +292,7 @@ const RecommendationDashboard = ({ userData }) => {
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">Savings Trajectory</h3>
+            <h3 className="text-xl font-semibold mb-4 text-black">Savings Trajectory</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={trajectoryData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -314,7 +307,7 @@ const RecommendationDashboard = ({ userData }) => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">Investment Vehicle Comparison</h3>
+            <h3 className="text-xl font-semibold mb-4 text-black">Investment Vehicle Comparison</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -423,3 +416,4 @@ const RecommendationCard = ({ recommendation, priority }) => {
 };
 
 export default DashboardPage;
+
