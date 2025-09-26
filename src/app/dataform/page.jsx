@@ -144,8 +144,8 @@ const DataEntryForm = ({ onDataSubmit }) => {
             required
           >
             <option value="">Select age</option>
-            {Array.from({ length: 18 }, (_, i) => (
-              <option key={i} value={i + 1}>{i + 1} years old</option>
+            {Array.from({ length: 9 }, (_, i) => (
+              <option key={i} value={i + 10}>{i + 10} years old</option>
             ))}
           </select>
         </div>
@@ -161,12 +161,9 @@ const DataEntryForm = ({ onDataSubmit }) => {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">Select grade</option>
-            <option value="pre-k">Pre-K</option>
-            <option value="kindergarten">Kindergarten</option>
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={`grade-${i + 1}`}>Grade {i + 1}</option>
+            {Array.from({ length: 8 }, (_, i) => (
+              <option key={i + 5} value={i + 5}>Grade {i + 5}</option>
             ))}
-            <option value="graduated">High School Graduate</option>
           </select>
         </div>
 
@@ -285,14 +282,14 @@ const DataEntryForm = ({ onDataSubmit }) => {
             required
           >
             <option value="">Select income range</option>
-            <option value="under-30k">Under $30,000</option>
-            <option value="30k-50k">$30,000 - $50,000</option>
-            <option value="50k-75k">$50,000 - $75,000</option>
-            <option value="75k-100k">$75,000 - $100,000</option>
-            <option value="100k-150k">$100,000 - $150,000</option>
-            <option value="150k-200k">$150,000 - $200,000</option>
-            <option value="200k-250k">$200,000 - $250,000</option>
-            <option value="over-250k">Over $250,000</option>
+            <option value="under-30k">Under 3.5 lakh</option>
+            <option value="30k-50k">3.5 - 5 lakh</option>
+            <option value="50k-75k">5 - 7.5 lakh</option>
+            <option value="75k-100k">7.5 - 10 lakh</option>
+            <option value="100k-150k">10 - 15 lakh</option>
+            <option value="150k-200k">15 - 20 lakh</option>
+            <option value="200k-250k">20 - 25 lakh</option>
+            <option value="over-250k">Over 25 lakh</option>
           </select>
         </div>
 
@@ -340,7 +337,7 @@ const DataEntryForm = ({ onDataSubmit }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Current College Savings ($)
+            Current College Savings (₹)
           </label>
           <input
             type="number"
@@ -355,7 +352,7 @@ const DataEntryForm = ({ onDataSubmit }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Monthly Contribution Capacity ($)
+            Monthly Contribution Capacity (₹)
           </label>
           <input
             type="number"
@@ -411,7 +408,7 @@ const DataEntryForm = ({ onDataSubmit }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Target Annual Tuition Cost ($)
+            Target Annual Tuition Cost (₹)
           </label>
           <input
             type="number"
@@ -419,11 +416,11 @@ const DataEntryForm = ({ onDataSubmit }) => {
             value={formData.targetSchoolCost}
             onChange={handleInputChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="e.g., 25000"
+            placeholder="e.g., 250000"
             min="0"
           />
           <p className="text-sm text-gray-500 mt-1">
-            Average public: ~$25,000, Private: ~$55,000
+            Example: ₹2,50,000 (adjust per your target institution)
           </p>
         </div>
 
@@ -450,9 +447,10 @@ const DataEntryForm = ({ onDataSubmit }) => {
         <div className="text-sm text-blue-700 space-y-1">
           <p><strong>Student:</strong> {formData.studentName || 'Not specified'}</p>
           <p><strong>Current Age:</strong> {formData.currentAge ? `${formData.currentAge} years` : 'Not specified'}</p>
-          <p><strong>Years to College:</strong> {formData.currentAge ? 18 - parseInt(formData.currentAge) : 'N/A'}</p>
-          <p><strong>Monthly Contribution:</strong> ${formData.monthlyContribution || '0'}</p>
-          <p><strong>Current Savings:</strong> ${formData.currentSavings || '0'}</p>
+          <p><strong>Current Grade:</strong> {formData.currentGrade ? `Grade ${formData.currentGrade}` : 'Not specified'}</p>
+          <p><strong>Years to College:</strong>  {13 - parseInt(formData.currentGrade)}</p>
+          <p><strong>Monthly Contribution:</strong> ₹{formData.monthlyContribution || '0'}</p>
+          <p><strong>Current Savings:</strong> ₹{formData.currentSavings || '0'}</p>
         </div>
       </div>
     </div>

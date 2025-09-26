@@ -11,13 +11,13 @@ const INVESTMENT_RETURNS = {
   aggressive: 0.09    // 9% annual return
 };
 
-// Average tuition costs by school type (2024 baseline)
+// Average tuition costs by school type in INR (illustrative baselines)
 const BASELINE_TUITION_COSTS = {
-  public: 25000,      // Public in-state
-  'public-out': 45000, // Public out-of-state
-  private: 55000,     // Private university
-  community: 4000,    // Community college
-  trade: 15000        // Trade school
+  public: 250000,       // Public in-state (₹)
+  'public-out': 450000, // Public out-of-state (₹)
+  private: 550000,      // Private university (₹)
+  community: 40000,     // Community college (₹)
+  trade: 150000         // Trade school (₹)
 };
 
 // State tax benefits for 529 plans (simplified - varies by state)
@@ -161,7 +161,7 @@ export function simulate529Growth(initialAmount, monthlyContribution, annualRetu
  * @param {number} years - Time horizon
  * @returns {object} Traditional savings projection
  */
-export function simulateTraditionalSavings(initialAmount, monthlyContribution, interestRate = 0.02, years) {
+export function simulateTraditionalSavings(initialAmount, monthlyContribution, interestRate = 0.04, years) {
   const monthlyRate = interestRate / 12;
   let balance = initialAmount;
   let totalContributions = initialAmount;

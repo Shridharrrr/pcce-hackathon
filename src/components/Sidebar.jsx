@@ -42,6 +42,9 @@ export default function AppSidebar({ children }) {
   const handleLogout = async () => {
     try {
       await logout();
+      if (typeof window !== "undefined") {
+        window.location.href = "/";
+      }
     } catch (error) {
       console.error("Failed to log out:", error);
     }

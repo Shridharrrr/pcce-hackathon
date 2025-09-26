@@ -47,7 +47,14 @@ const ProjectionsPage = () => {
     if (loading) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                <div className="relative">
+                    <div className="animate-spin h-16 w-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg">
+                            <span className="text-2xl font-extrabold text-amber-600">₹</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -100,14 +107,14 @@ const CollegeCostProjection = ({ analysis }) => (
             <BarChart data={analysis.tuitionProjections.yearByCost}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" tickFormatter={(value) => `Year ${value}`} />
-                <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Tuition Cost']} />
+                <YAxis tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} />
+                <Tooltip formatter={(value) => [`₹${value.toLocaleString('en-IN')}`, 'Tuition Cost']} />
                 <Bar dataKey="cost" fill="#EF4444" />
             </BarChart>
         </ResponsiveContainer>
         <div className="mt-4 text-center">
             <div className="text-2xl font-bold text-gray-800">
-                ${analysis.tuitionProjections.totalCollegeCost.toLocaleString()}
+                ₹{analysis.tuitionProjections.totalCollegeCost.toLocaleString('en-IN')}
             </div>
             <div className="text-sm text-gray-600">Total 4-Year Cost</div>
         </div>
@@ -129,7 +136,7 @@ const SavingsGapAnalysis = ({ analysis }) => (
                     <Cell fill="#10B981" />
                     <Cell fill="#EF4444" />
                 </Pie>
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, '']} />
+                <Tooltip formatter={(value) => [`₹${value.toLocaleString('en-IN')}`, '']} />
                 <Legend />
             </PieChart>
         </ResponsiveContainer>
@@ -141,7 +148,7 @@ const SavingsGapAnalysis = ({ analysis }) => (
             <div className="flex justify-between">
                 <span className="text-gray-600">Remaining Gap:</span>
                 <span className="font-semibold text-red-600">
-                    ${analysis.gapAnalysis.shortfall529.toLocaleString()}
+                    ₹{analysis.gapAnalysis.shortfall529.toLocaleString('en-IN')}
                 </span>
             </div>
         </div>
@@ -163,8 +170,8 @@ const RiskAssessmentChart = ({ analysis }) => {
                 <BarChart data={riskScenarios}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="scenario" />
-                    <YAxis tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`} />
-                    <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                    <YAxis tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} />
+                    <Tooltip formatter={(value) => `₹${value.toLocaleString('en-IN')}`} />
                     <Bar dataKey="finalAmount" fill="#8B5CF6" />
                     <ReferenceLine y={analysis.gapAnalysis.savingsGoal} stroke="#10B981" strokeDasharray="3 3" label={{ value: "Goal", position: "insideTopRight" }} />
                 </BarChart>
@@ -196,7 +203,7 @@ const ContributionOptimizer = ({ analysis, userData }) => {
                                 {index === 1 && <div className="text-xs text-blue-600 font-medium">RECOMMENDED</div>}
                             </div>
                             <div className="text-right">
-                                <div className="text-lg font-bold">${scenario.monthly.toLocaleString()}/mo</div>
+                                <div className="text-lg font-bold">₹{scenario.monthly.toLocaleString('en-IN')}/mo</div>
                             </div>
                         </div>
                         <div className="bg-gray-200 rounded-full h-2 mt-3">

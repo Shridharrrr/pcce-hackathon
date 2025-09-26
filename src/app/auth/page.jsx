@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '@/config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db, googleProvider } from '@/config/firebase';
 
 const AuthForm = ({ onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,9 +27,11 @@ const AuthForm = ({ onAuthSuccess }) => {
     setLoading(true);
     setError('');
     try {
-      await signInWithPopup(auth, googleProvider);
-      if (typeof window !== 'undefined') {
-        window.location.href = '/dataform';
+      const result = await signInWithPopup(auth, googleProvider);
+      if (typeof window !== 'undefined' && result?.user) {
+        const profileRef = doc(db, 'userProfiles', result.user.uid);
+        const profileSnap = await getDoc(profileRef);
+        window.location.href = profileSnap.exists() ? '/dashboard' : '/dataform';
       }
     } catch (error) {
       setError(error.message);
@@ -47,14 +50,16 @@ const AuthForm = ({ onAuthSuccess }) => {
         throw new Error('Passwords do not match');
       }
 
+      let userCredential;
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
       } else {
-        await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       }
-      // redirect to dataform after successful auth
-      if (typeof window !== 'undefined') {
-        window.location.href = '/dataform';
+      if (typeof window !== 'undefined' && userCredential?.user) {
+        const profileRef = doc(db, 'userProfiles', userCredential.user.uid);
+        const profileSnap = await getDoc(profileRef);
+        window.location.href = profileSnap.exists() ? '/dashboard' : '/dataform';
       }
     } catch (error) {
       setError(error.message);

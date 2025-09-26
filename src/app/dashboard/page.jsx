@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/config/firebase';
 import { generateRecommendations } from '@/lib/recommendationEngine'; // Corrected path
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, ReferenceLine, PieChart, Pie, Cell } from 'recharts';
 
 // --- MAIN DASHBOARD COMPONENT ---
 const DashboardPage = () => {
@@ -43,7 +43,14 @@ const DashboardPage = () => {
     if (loading) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                <div className="relative">
+                    <div className="animate-spin h-16 w-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg">
+                            <span className="text-2xl font-extrabold text-amber-600">₹</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -114,7 +121,7 @@ const QuickStats = ({ userData }) => (
             <div className="ml-4">
               <p className="text-sm text-gray-500">Current Savings</p>
               <p className="text-2xl font-bold text-gray-800">
-                ${parseInt(userData?.currentSavings || 0).toLocaleString()}
+                ₹{parseInt(userData?.currentSavings || 0).toLocaleString('en-IN')}
               </p>
             </div>
           </div>
@@ -129,7 +136,7 @@ const QuickStats = ({ userData }) => (
             <div className="ml-4">
               <p className="text-sm text-gray-500">Monthly Contribution</p>
               <p className="text-2xl font-bold text-gray-800">
-                ${parseInt(userData?.monthlyContribution || 0).toLocaleString()}
+                ₹{parseInt(userData?.monthlyContribution || 0).toLocaleString('en-IN')}
               </p>
             </div>
           </div>
@@ -144,7 +151,7 @@ const QuickStats = ({ userData }) => (
             <div className="ml-4">
               <p className="text-sm text-gray-500">Target Tuition</p>
               <p className="text-2xl font-bold text-gray-800">
-                ${parseInt(userData?.targetSchoolCost || 0).toLocaleString()}
+                ₹{parseInt(userData?.targetSchoolCost || 0).toLocaleString('en-IN')}
               </p>
             </div>
           </div>
@@ -257,7 +264,7 @@ const RecommendationDashboard = ({ userData }) => {
             <div className="text-blue-100">High Priority Actions</div>
           </div>
           <div className="bg-white/20 rounded-lg p-4">
-            <div className="text-2xl font-bold">${recommendations.summary.estimatedImpact.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{recommendations.summary.estimatedImpact.toLocaleString('en-IN')}</div>
             <div className="text-blue-100">Potential Additional Savings</div>
           </div>
           <div className="bg-white/20 rounded-lg p-4">
@@ -297,8 +304,8 @@ const RecommendationDashboard = ({ userData }) => {
               <LineChart data={trajectoryData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="year" />
-                <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, '']} />
+                <YAxis tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} />
+                <Tooltip formatter={(value) => [`₹${value.toLocaleString('en-IN')}`, '']} />
                 <Legend />
                 <Line type="monotone" dataKey="savings" stroke="#3B82F6" strokeWidth={3} name="Projected Savings"/>
                 <Line type="monotone" dataKey="target" stroke="#10B981" strokeDasharray="5 5" name="Savings Goal"/>
@@ -309,21 +316,24 @@ const RecommendationDashboard = ({ userData }) => {
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-semibold mb-4">Investment Vehicle Comparison</h3>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={savingsComparisonData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="vehicle" />
-                <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, '']} />
-                <Bar dataKey="finalAmount" fill="#3B82F6" />
-                <ReferenceLine y={analysis.gapAnalysis.savingsGoal} stroke="#10B981" strokeDasharray="3 3" />
-              </BarChart>
+              <PieChart>
+                <Pie
+                  data={savingsComparisonData}
+                  dataKey="finalAmount"
+                  nameKey="vehicle"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  label={({ name, value }) => `${name}: ₹${value.toLocaleString('en-IN')}`}
+                >
+                  {savingsComparisonData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={["#3B82F6", "#10B981", "#8B5CF6"][index % 3]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => [`₹${value.toLocaleString('en-IN')}`, '']} />
+                <Legend />
+              </PieChart>
             </ResponsiveContainer>
-             <div className="mt-4 text-sm text-gray-600">
-                <div className="flex items-center">
-                    <div className="w-3 h-3 bg-green-500 mr-2 rounded-full"></div>
-                        Savings Goal: ${analysis.gapAnalysis.savingsGoal.toLocaleString()}
-                </div>
-            </div>
           </div>
         </div>
       )}
