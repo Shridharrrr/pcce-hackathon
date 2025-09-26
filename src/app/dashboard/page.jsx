@@ -256,7 +256,7 @@ const RecommendationDashboard = ({ userData }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white shadow-2xl">
+      <div className="bg-blue-600 rounded-2xl p-8 text-white shadow-2xl">
         <h1 className="text-3xl font-bold mb-4">Your College Savings Recommendations</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white/20 rounded-lg p-4">
@@ -342,8 +342,8 @@ const RecommendationDashboard = ({ userData }) => {
       {activeTab === 'recommendations' && (
          <div className="space-y-6">
              <div>
-               <h3 className="text-xl font-semibold mb-4 text-red-600">🚨 High Priority Actions</h3>
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <h3 className="text-xl font-semibold mb-4 text-blue-700">High Priority Actions</h3>
+              <div className="grid grid-cols-1 gap-6">
                  {recommendations.primary.map((rec) => (
                    <RecommendationCard key={rec.id} recommendation={rec} priority="high" />
                  ))}
@@ -351,8 +351,8 @@ const RecommendationDashboard = ({ userData }) => {
              </div>
              {recommendations.secondary.length > 0 && (
                <div>
-                 <h3 className="text-xl font-semibold mb-4 text-orange-600">⚡ Consider These Options</h3>
-                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <h3 className="text-xl font-semibold mb-4 text-gray-800">Consider These Options</h3>
+                <div className="grid grid-cols-1 gap-6">
                    {recommendations.secondary.map((rec) => (
                      <RecommendationCard key={rec.id} recommendation={rec} priority="medium" />
                    ))}
@@ -369,34 +369,35 @@ const RecommendationDashboard = ({ userData }) => {
 const RecommendationCard = ({ recommendation, priority }) => {
     const [expanded, setExpanded] = useState(false);
     
+    // Colors only for the badge bubble; card stays white/neutral
     const priorityClasses = {
-        high: { border: 'border-red-200', bg: 'bg-red-50', text: 'text-red-600' },
-        medium: { border: 'border-orange-200', bg: 'bg-orange-50', text: 'text-orange-600' },
-        low: { border: 'border-blue-200', bg: 'bg-blue-50', text: 'text-blue-600' }
+        high: { badgeText: 'text-red-700', badgeBorder: 'border-red-200', badgeBg: 'bg-red-50' },
+        medium: { badgeText: 'text-orange-700', badgeBorder: 'border-orange-200', badgeBg: 'bg-orange-50' },
+        low: { badgeText: 'text-blue-700', badgeBorder: 'border-blue-200', badgeBg: 'bg-blue-50' }
     };
     
-    const icons = { high: '🚨', medium: '⚡', low: '🎯' };
+    const icons = { high: '🔹', medium: '▫️', low: '🎯' };
     const selectedClass = priorityClasses[priority];
 
     return (
-        <div className={`border-2 rounded-xl p-6 transition-all hover:shadow-lg ${selectedClass.border} ${selectedClass.bg}`}>
+        <div className={`bg-white border border-gray-200 rounded-xl p-6 transition-all hover:shadow`}>
             <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                    <span className="text-xl">{icons[priority]}</span>
-                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${selectedClass.text} bg-white`}>
-                        {priority.toUpperCase()} PRIORITY
+                    <span className="text-lg">{icons[priority]}</span>
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${selectedClass.badgeText} ${selectedClass.badgeBg} ${selectedClass.badgeBorder} border`}>
+                        {priority === 'high' ? 'High priority' : priority === 'medium' ? 'Recommendation' : 'Optional'}
                     </span>
                 </div>
             </div>
             
-            <h4 className="font-bold text-lg text-gray-800 mb-2">{recommendation.title}</h4>
-            <p className="text-gray-600 mb-4">{recommendation.description}</p>
+            <h4 className="font-semibold text-lg text-gray-900 mb-2">{recommendation.title}</h4>
+            <p className="text-gray-700 mb-4">{recommendation.description}</p>
             
             <button 
                 onClick={() => setExpanded(!expanded)}
-                className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                className="flex items-center space-x-2 text-sm text-blue-700 hover:text-blue-900 font-medium"
             >
-                <span>{expanded ? 'Less Details' : 'More Details'}</span>
+                <span>{expanded ? 'Show less' : 'Show more'}</span>
                 <span className={`transform transition-transform ${expanded ? 'rotate-180' : ''}`}>↓</span>
             </button>
             
@@ -404,11 +405,11 @@ const RecommendationCard = ({ recommendation, priority }) => {
                 <div className="mt-4 space-y-3 border-t pt-4">
                     {recommendation.benefits && (
                         <div>
-                            <div className="text-sm font-medium text-gray-700 mb-2">Benefits:</div>
-                            <ul className="text-sm text-gray-600 space-y-1">
+                            <div className="text-sm font-medium text-gray-800 mb-2">Benefits</div>
+                            <ul className="text-sm text-gray-700 space-y-1">
                                 {recommendation.benefits.map((benefit, index) => (
                                     <li key={index} className="flex items-start">
-                                        <span className="text-green-500 mr-2">✓</span>
+                                        <span className="text-blue-600 mr-2">✓</span>
                                         {benefit}
                                     </li>
                                 ))}

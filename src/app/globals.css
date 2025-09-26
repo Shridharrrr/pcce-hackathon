@@ -30,11 +30,20 @@ body {
   html {
     font-family: system-ui, sans-serif;
   }
+  input, select, textarea {
+    @apply text-gray-900 placeholder:text-gray-600 bg-white;
+  }
+  /* Force all common gray text utilities to black for maximum visibility */
+  .text-gray-400 { color: #000000 !important; }
+  .text-gray-500 { color: #000000 !important; }
+  .text-gray-600 { color: #000000 !important; }
+  .text-gray-700 { color: #000000 !important; }
+  .text-gray-800 { color: #000000 !important; }
 }
 
 @layer components {
   .form-input {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-600 bg-white;
   }
   
   .btn-primary {

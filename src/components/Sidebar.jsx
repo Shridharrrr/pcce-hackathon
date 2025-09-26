@@ -25,6 +25,12 @@ const navigation = [
     icon: ChartBarIcon,
     activeIcon: ChartBarSolid,
   },
+    {
+      name: "Retirement",
+      href: "/retirement",
+      icon: LightBulbIcon,
+      activeIcon: LightBulbSolid,
+    },
 ];
 
 export default function AppSidebar({ children }) {

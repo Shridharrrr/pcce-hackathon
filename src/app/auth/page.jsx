@@ -69,8 +69,8 @@ const AuthForm = ({ onAuthSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 backdrop-blur-lg bg-opacity-95">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 border border-gray-200">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">College Savings Planner</h1>
           <p className="text-gray-600">Plan your child's future education</p>
@@ -111,7 +111,7 @@ const AuthForm = ({ onAuthSuccess }) => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            className="form-input"
               placeholder="Enter your email"
               required
             />
@@ -126,7 +126,7 @@ const AuthForm = ({ onAuthSuccess }) => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            className="form-input"
               placeholder="Enter your password"
               required
             />
@@ -142,7 +142,7 @@ const AuthForm = ({ onAuthSuccess }) => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="form-input"
                 placeholder="Confirm your password"
                 required
               />

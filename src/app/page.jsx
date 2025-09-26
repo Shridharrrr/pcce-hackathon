@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="w-full bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -35,22 +35,22 @@ export default function Home() {
             <a href="#features" className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">Learn more</a>
           </div>
         </div>
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-blue-50">
-              <div className="text-2xl font-bold text-blue-600">529</div>
+            <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
+              <div className="text-2xl font-bold text-blue-700">529</div>
               <div className="text-sm text-gray-600">Plan Insights</div>
             </div>
-            <div className="p-4 rounded-lg bg-green-50">
-              <div className="text-2xl font-bold text-green-600">+7%</div>
+            <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
+              <div className="text-2xl font-bold text-blue-700">+7%</div>
               <div className="text-sm text-gray-600">Projected Return</div>
             </div>
-            <div className="p-4 rounded-lg bg-purple-50">
-              <div className="text-2xl font-bold text-purple-600">$25k</div>
+            <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
+              <div className="text-2xl font-bold text-blue-700">$25k</div>
               <div className="text-sm text-gray-600">Goal Coverage</div>
             </div>
-            <div className="p-4 rounded-lg bg-orange-50">
-              <div className="text-2xl font-bold text-orange-600">4 yrs</div>
+            <div className="p-4 rounded-lg bg-blue-50 border border-blue-100">
+              <div className="text-2xl font-bold text-blue-700">4 yrs</div>
               <div className="text-sm text-gray-600">Cost Projection</div>
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
       {/* Features */}
       <section id="features" className="max-w-7xl mx-auto px-4 pb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
         {["Smart Recommendations","Clear Projections","Actionable Strategies"].map((title, i) => (
-          <div key={i} className="bg-white rounded-xl shadow p-6">
+          <div key={i} className="bg-white rounded-xl shadow p-6 border border-gray-200">
             <div className="text-lg font-semibold text-gray-900">{title}</div>
             <div className="mt-2 text-sm text-gray-600">Built-in analytics tailor your plan to your family's needs.</div>
           </div>
