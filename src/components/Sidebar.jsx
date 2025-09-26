@@ -18,16 +18,10 @@ import {
 
 // Updated navigation for your app
 const navigation = [
-  { name: "Dashboard", href: "/", icon: HomeSolid, activeIcon: HomeSolid },
+  { name: "Dashboard", href: "/dashboard", icon: HomeSolid, activeIcon: HomeSolid },
   {
-    name: "Recommendations",
-    href: "/recommendations",
-    icon: LightBulbIcon,
-    activeIcon: LightBulbSolid,
-  },
-  {
-    name: "Strategies",
-    href: "/strategies",
+    name: "Projections",
+    href: "/projections",
     icon: ChartBarIcon,
     activeIcon: ChartBarSolid,
   },

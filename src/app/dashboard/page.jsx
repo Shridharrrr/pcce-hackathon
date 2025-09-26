@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '@config/firebase'; // Corrected path
+import { auth, db } from '@/config/firebase';
 import { generateRecommendations } from '@/lib/recommendationEngine'; // Corrected path
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, ReferenceLine } from 'recharts';
 
@@ -69,24 +69,11 @@ const DashboardPage = () => {
                 {/* --- Recommendation Section --- */}
                 <RecommendationDashboard userData={userData} />
 
-                {/* --- Action Buttons --- */}
-                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <a href="/projections" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all shadow-lg text-center flex items-center justify-center">
-                        View Projections & Strategies
-                    </a>
-                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all shadow-lg">
-                        Update Profile
-                    </button>
+                 {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <button className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-6 rounded-xl transition-all shadow-lg">
                         Export Report
                     </button>
-                    <button
-                        onClick={() => auth.signOut()}
-                        className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl transition-all shadow-lg"
-                    >
-                        Sign Out
-                    </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

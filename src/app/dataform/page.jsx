@@ -73,7 +73,12 @@ const DataEntryForm = ({ onDataSubmit }) => {
           lastUpdated: new Date()
         });
         
-        onDataSubmit(updatedFormData);
+        if (onDataSubmit) {
+          onDataSubmit(updatedFormData);
+        }
+        if (typeof window !== 'undefined') {
+          window.location.href = '/dashboard';
+        }
       }
     } catch (error) {
       console.error('Error saving data:', error);

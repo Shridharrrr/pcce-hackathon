@@ -37,8 +37,10 @@ const AuthForm = ({ onAuthSuccess }) => {
       } else {
         await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       }
-      
-      onAuthSuccess();
+      // redirect to dataform after successful auth
+      if (typeof window !== 'undefined') {
+        window.location.href = '/dataform';
+      }
     } catch (error) {
       setError(error.message);
     } finally {
