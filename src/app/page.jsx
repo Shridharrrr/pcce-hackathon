@@ -25,7 +25,7 @@ export default function Home() {
       <header className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-            Plan, Save, and Achieve your child's college goals
+            Plan, Save and Achieve your Child's College Goals
           </h1>
           <p className="mt-4 text-lg text-gray-600">
             Personalized projections, smart recommendations, and a clear path to fund education.

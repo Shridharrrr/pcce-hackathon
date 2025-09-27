@@ -155,9 +155,10 @@ export default function AppSidebar({ children }) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex min-h-0 flex-1 flex-col bg-white border-r border-gray-200">
           <div className="flex h-16 items-center px-4 border-b">
-            <a href="/" className="text-xl font-bold text-gray-900 ml-2">
-              Planora
-            </a>
+            <div className="flex items-center space-x-3 ml-3">
+            <div className="h-6 w-6 rounded bg-blue-600" />
+            <span className="text-xl font-bold text-gray-900">Planora</span>
+          </div>
           </div>
 
           <nav className="flex-1 px-4 py-6 space-y-2">
