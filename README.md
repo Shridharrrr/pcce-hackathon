@@ -45,8 +45,8 @@ Planora is a web-based financial planning platform that helps students and famil
 
 ## 👥 Team Members
 
-* **Shraman Deshpande** – [@github-username](https://github.com/Shraman91) – Frontend Developer & version control
-* **Shridhar Mandrekar** – [@github-username](https://github.com/Shridharrrr) – Backend Developer & AI
-* **Sameet Naik** – [@github-username](https://github.com/sameetnaik727) – PPT & Data Visualization
+* **Shraman Deshpande** – [@github-Shraman91](https://github.com/Shraman91) – Frontend Developer & version control
+* **Shridhar Mandrekar** – [@github-Shridharrrr](https://github.com/Shridharrrr) – Backend Developer & AI
+* **Sameet Naik** – [@github-sameetnaik727](https://github.com/sameetnaik727) – PPT & Data Visualization
 
 
